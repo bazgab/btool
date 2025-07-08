@@ -1,7 +1,20 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+Copyright 2025 The btool Authors All rights reserved
 
+DISCLAIMER:
+
+btool is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation
+
+btool is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+
+The full license can be seen in the file ./LICENSE.  If not see
+<http://www.gnu.org/licenses/>.
 */
+
 package cmd
 
 import (
@@ -10,25 +23,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "btool",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Use:     "btool",
+	Short:   "A general-purpose backup tool",
+	Version: "0.1 (Pre-Alpha)",
+	Long: `A general-purpose backup tool aiming to facilitate basic aspects of creating, managing and deleting backups and dumps.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+For Documentation, as well as a better understanding of the architecture, see the project on github: https://github.com/bazgab/btool
+`,
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+// Execute - This call needs to only happen once
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -45,7 +51,7 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
 }
-
-
