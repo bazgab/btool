@@ -44,7 +44,7 @@ func runInit(cmd *cobra.Command, args []string) {
 		btoolDirectory = h + "/.config/btool"
 	)
 
-	slog.Info("Checking for" + btoolDirectory + "directory...")
+	slog.Info("Checking for " + btoolDirectory + " directory...")
 
 	if _, err := os.Stat(btoolDirectory); os.IsNotExist(err) {
 		slog.Warn(btoolDirectory + " directory does not exist")
