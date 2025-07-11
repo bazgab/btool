@@ -18,7 +18,7 @@ The full license can be seen in the file ./LICENSE.  If not see
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -44,27 +44,27 @@ func runInit(cmd *cobra.Command, args []string) {
 		btoolDirectory = h + "/.config/btool"
 	)
 
-	fmt.Println("Checking for" + btoolDirectory + "directory...")
+	slog.Info("Checking for" + btoolDirectory + "directory...")
 
 	if _, err := os.Stat(btoolDirectory); os.IsNotExist(err) {
-		fmt.Println(btoolDirectory + " directory does not exist")
-		fmt.Println("Attempting to create it...")
+		slog.Warn(btoolDirectory + " directory does not exist")
+		slog.Info("Attempting to create it...")
 
 		err := os.MkdirAll(btoolDirectory, 0755)
 		if err != nil {
-			fmt.Println(err.Error())
+			slog.Error(err.Error())
 		}
 	} else {
-		fmt.Println(btoolDirectory + " directory exists")
+		slog.Info(btoolDirectory + " directory exists")
 	}
 
 	f := btoolDirectory + "/conf.yaml"
 
-	fmt.Println("Checking for configuration file...")
+	slog.Info("Checking for configuration file...")
 
 	if cFile(f) == false {
-		fmt.Println("Configuration file does not exist")
-		fmt.Println(f + " is required, attempting to create it...")
+		slog.Warn("Configuration file does not exist")
+		slog.Warn(f + " is required, attempting to create it...")
 
 		var content =
 		// Template file
@@ -88,14 +88,14 @@ func runInit(cmd *cobra.Command, args []string) {
 		// Creating the configuration file
 		err := os.WriteFile(f, []byte(content), 0755)
 		if err != nil {
-			fmt.Println(err.Error())
+			slog.Error(err.Error())
 		}
 
 	} else {
-		fmt.Println("Configuration file exists")
+		slog.Info("Configuration file exists")
 	}
 
-	fmt.Println("Success - Init check completed. Run 'btool --help' for usage.")
+	slog.Info("Success - Init check completed. Run 'btool --help' for usage.")
 }
 
 func cFile(filename string) bool {
