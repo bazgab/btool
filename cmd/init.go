@@ -96,6 +96,7 @@ func runInit(cmd *cobra.Command, args []string) {
 	}
 
 	slog.Info("Success - Init check completed. Run 'btool --help' for usage.")
+	
 }
 
 func cFile(filename string) bool {
@@ -105,3 +106,5 @@ func cFile(filename string) bool {
 	}
 	return true
 }
+
+
