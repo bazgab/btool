@@ -22,6 +22,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+
+// To be debated > go the cron route or just simply write out from YAML config file
+
+
 var scheduleCmd = &cobra.Command{
 	Use:   "schedule",
 	Short: "Schedules a dump",
