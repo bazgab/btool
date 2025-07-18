@@ -20,28 +20,29 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"slog"
 )
 
 
 // To be debated > go the cron route or just simply write out from YAML config file
 
 
-var scheduleCmd = &cobra.Command{
-	Use:   "schedule",
-	Short: "Schedules a dump",
-	Long: `Schedules a dump. 
+var createCmd = &cobra.Command{
+	Use:   "create",
+	Short: "create a dump",
+	Long: `Creates a dump from a config file. 
 
-Notice: for this command to work properly, it is required to have set the frequency and path parameters in btool's configuration file, located at $HOME/.config/btool/`,
-	Run: runSchedule,
+All values can be assigned directly into the config file. For templates and a more detailed reference, see the docs`,
+	Run: runCreate,
 }
 
 func init() {
-	rootCmd.AddCommand(scheduleCmd)
-	logCmd.Flags().StringP("file", "F", "", "file name to write the dump to")
+	rootCmd.AddCommand(createCmd)
+	createCmd.Flags().StringP("conf", "C", "", "config file with dump parameters (required)")
 }
 
 func runSchedule(cmd *cobra.Command, _ []string) {
-	f, err := cmd.Flags().GetString("file")
+	f, err := cmd.Flags().GetString("conf")
 	if err != nil {
 		slog.Error(err, "Command failed to execute")
 	}
