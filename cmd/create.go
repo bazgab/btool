@@ -18,68 +18,32 @@ The full license can be seen in the file ./LICENSE.  If not see
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
-	"log/slog"
-	"os"
-	"os/exec"
+	"slog"
 )
 
-// rootCmd represents the base command when called without any subcommands
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Creates a dump routine",
-	Long: `Creates a dump routine. 
+	Short: "create a dump",
+	Long: `Creates a dump from a config file. 
 
-Dumps will be created according to the options specified in the configuration file located in $HOME/.config/btool/conf.yaml`,
+All values can be assigned directly into the config file. For templates and a more detailed reference, see the docs`,
 	Run: runCreate,
 }
 
 func init() {
-
 	rootCmd.AddCommand(createCmd)
-	createCmd.Flags().StringP("file", "F", "", "file name to write dump to (required)")
-
-	err := createCmd.MarkFlagRequired("file")
-	if err != nil {
-		slog.Error(err.Error())
-	}
-
+	createCmd.Flags().StringP("conf", "C", "", "config file with dump parameters (required)")
 }
 
-func runCreate(cmd *cobra.Command, args []string) {
-
-	// Change directory
-	uHome := os.Getenv("HOME")
-	p := uHome
-	// Get the directory to save from conf.yaml in the Dumps.path section
-
-	err := os.Chdir(p)
+func runSchedule(cmd *cobra.Command, _ []string) {
+	f, err := cmd.Flags().GetString("conf")
 	if err != nil {
-		slog.Error(err.Error())
+		slog.Error(err, "Command failed to execute")
 	}
 
-	// *** The following block is meant only for testing ***
-
-	wDir, _ := os.Getwd()
-	if err != nil {
-		slog.Error("Couldn't change working directory: " + err.Error())
-	}
-	slog.Info("Setting Working directory as: " + wDir)
-
-	cmdStr := "mariadb-dump mariadb_test > test-dump1.sql"
-	slog.Info("Executing: " + cmdStr)
-	c := exec.Command("/bin/sh", "-c", "mariadb-dump mariadb_test > test-dump1.sql")
-
-	var stdout []byte
-	stdout, err = c.Output()
-
-	if err != nil {
-		slog.Error(err.Error())
-	}
-
-	// Print the output
-	slog.Info(string(stdout))
-
-	// *** End of Testing ***
-
+	slog.Info("The following file will be written: " + f)
+	
+	
 }
