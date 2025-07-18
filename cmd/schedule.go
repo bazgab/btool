@@ -23,10 +23,6 @@ import (
 	"slog"
 )
 
-
-// To be debated > go the cron route or just simply write out from YAML config file
-
-
 var createCmd = &cobra.Command{
 	Use:   "create",
 	Short: "create a dump",
