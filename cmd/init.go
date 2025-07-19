@@ -33,13 +33,12 @@ package cmd
 import (
 	"log/slog"
 	"os"
-
 	"github.com/spf13/cobra"
 )
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initializes btool",
+	Short: "creates sample conf file in the current directory",
 	Long: `Initializes btool. This command is ideally meant to be used only once after installation, 
 and provides the instructions for btool to create the necessary directories and files to make
 it work as intended.`,
