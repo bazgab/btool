@@ -18,9 +18,9 @@ The full license can be seen in the file ./LICENSE.  If not see
 package cmd
 
 import (
-	"fmt"
+	
 	"github.com/spf13/cobra"
-	"slog"
+	"log/slog"
 )
 
 var createCmd = &cobra.Command{
@@ -37,10 +37,10 @@ func init() {
 	createCmd.Flags().StringP("conf", "C", "", "config file with dump parameters (required)")
 }
 
-func runSchedule(cmd *cobra.Command, _ []string) {
+func runCreate(cmd *cobra.Command, _ []string) {
 	f, err := cmd.Flags().GetString("conf")
 	if err != nil {
-		slog.Error(err, "Command failed to execute")
+		slog.Error(err.Error())
 	}
 
 	slog.Info("The following file will be written: " + f)

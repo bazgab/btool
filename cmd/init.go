@@ -15,6 +15,19 @@ The full license can be seen in the file ./LICENSE.  If not see
 <http://www.gnu.org/licenses/>.
 */
 
+/*
+   IMPORTANT COMMENT: 
+   
+   With the use of parsing config files in general, there is no use anymore for this command,
+   however we will substitute this for a config Template creation method, such as:
+   
+   btool-config init
+   
+   This command will create a configuration file in the current directory
+
+*/
+
+
 package cmd
 
 import (
