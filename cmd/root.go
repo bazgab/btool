@@ -47,3 +47,32 @@ func init() {
 
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 }
+
+
+// This provides a custom template for the help page, or when running just the 'btool' command
+func CustomHelpTemplate() string {
+	
+	return `{{.UseLine}}
+
+{{.Short}}
+
+Usage:
+  {{.UseLine}}{{if .HasAvailableSubCommands}}
+
+Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}
+
+{{if .HasAvailableLocalFlags}}Flags:
+{{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}{{end}}
+
+{{if .HasAvailablePersistentFlags}}Global Flags:
+{{.PersistentFlags.FlagUsages | trimTrailingWhitespaces}}{{end}}
+
+{{if .HasAvailableSubCommands}}Flags by Command:
+{{range .Commands}}{{if .HasAvailableFlags}}
+  {{.Name}}:
+{{.LocalFlags.FlagUsages | indent 4}}{{end}}{{end}}{{end}}
+
+Use "{{.CommandPath}} [command] --help" for more information about a command.`
+
+}
