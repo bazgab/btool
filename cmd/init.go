@@ -34,6 +34,7 @@ import (
 	"log/slog"
 	"os"
 	"github.com/spf13/cobra"
+	"fmt"
 )
 
 var initCmd = &cobra.Command{
@@ -61,10 +62,13 @@ func init() {
 
 func runInit(cmd *cobra.Command, args []string) {
 	
-	f, err := cmd.Flags().GetString("file")
+	file, err := cmd.Flags().GetString("file")
 	if err != nil {
-		slog.Error("File %s already exists", f)
+		slog.Error(err.Error())
 	}
+	
+	f := file + ".yaml"
+	slog.Info(fmt.Sprintf("File to be created: %s", f))
 	
 	if cFile(f) == false {
 		slog.Info("File does not exist, creating...")
@@ -96,7 +100,7 @@ func runInit(cmd *cobra.Command, args []string) {
 		}
 
 	} else {
-		slog.Info("Configuration file created!")
+		slog.Info(fmt.Sprintf("Configuration file %s already exists!", f))
 	}
 
 	slog.Info("Success - Init completed. Run 'btool --help' for usage.")
