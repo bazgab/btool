@@ -34,7 +34,7 @@ All values can be assigned directly into the config file. For templates and a mo
 
 func init() {
 	rootCmd.AddCommand(createCmd)
-	createCmd.Flags().StringP("conf", "C", "", "config file with dump parameters (required)")
+	createCmd.Flags().StringP("config", "C", "", "config file with dump parameters (required)")
 }
 
 func runCreate(cmd *cobra.Command, _ []string) {
