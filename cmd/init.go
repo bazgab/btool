@@ -62,7 +62,7 @@ func init() {
 func runInit(cmd *cobra.Command, args []string) {
 	
 	f, err := cmd.Flags().GetString("file")
-	if err != nul {
+	if err != nil {
 		slog.Error("File %s already exists", f)
 	}
 	
@@ -72,7 +72,7 @@ func runInit(cmd *cobra.Command, args []string) {
 		var content =
 		// Template file
 		"# BTOOL - A general-purpose backup tool to create dumps via configuration files\n" +
-"# -----------------------------------------------------------------------------------------\n"
+"# -----------------------------------------------------------------------------------------\n" +
 "# This is the configuration template file, it contains all possible attributes that btool\n" +
 "# can pull information from to properly process backup requests. For a detailed description\n" +
 "# of how to use each attribute, please see the spec file in the documentation at: \n" +
