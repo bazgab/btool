@@ -41,9 +41,9 @@ var initCmd = &cobra.Command{
 	Short: "Initializes a sample configuration YAML file in the current directory",
 	Long: `Initializes a sample configuration YAML file in the current directory, parsing the "name" flag as the file name (required). 
 	
-Exampĺe usage: btool init --file="db1"
+Exampĺe usage: btool init --file="btool_config"
 	
-This will create an empty config file db1.yaml in the current directory, which is used for later creating dumps/backups.
+This will create an empty config file btool_config.yaml in the current directory, which is used for later creating dumps/backups.
 	
 This file contains all the available configuration options you could set values to. For more information on how to make the most out of the file type, see docs.`,
 	Run: runInit,
@@ -60,52 +60,34 @@ func init() {
 }
 
 func runInit(cmd *cobra.Command, args []string) {
-
-	var (
-		h              = os.Getenv("HOME")
-		btoolDirectory = h + "/.config/btool"
-	)
-
-	slog.Info("Checking for " + btoolDirectory + " directory...")
-
-	if _, err := os.Stat(btoolDirectory); os.IsNotExist(err) {
-		slog.Warn(btoolDirectory + " directory does not exist")
-		slog.Info("Attempting to create it...")
-
-		err := os.MkdirAll(btoolDirectory, 0755)
-		if err != nil {
-			slog.Error(err.Error())
-		}
-	} else {
-		slog.Info(btoolDirectory + " directory exists")
+	
+	f, err := cmd.Flags().GetString("file")
+	if err != nul {
+		slog.Error("File %s already exists", f)
 	}
-
-	f := btoolDirectory + "/conf.yaml"
-
-	slog.Info("Checking for configuration file...")
-
+	
 	if cFile(f) == false {
-		slog.Warn("Configuration file does not exist")
-		slog.Warn(f + " is required, attempting to create it...")
+		slog.Info("File does not exist, creating...")
 
 		var content =
 		// Template file
-		"---\n" +
-			"# Specify database environment options\n" +
-			"\n" +
-			"Database:\n" +
-			"  engine:\n" +
-			"  # Please note it is not considered secure to store plain-text values for database credentials.\n" +
-			"  # See: https://github.com/bazgab/btool/blob/master/README.md\n" +
-			"  user:\n" +
-			"  password:\n" +
-			"\n" +
-			"# Specify dump options\n" +
-			"Dumps:\n" +
-			"  # Where btool will save the dumps to\n" +
-			"  path:\n" +
-			"  # How frequently btool will backup the dumps (accepted values are 'hourly', 'daily, or 'weekly')\n" +
-			"  frequency:\n"
+		"# BTOOL - A general-purpose backup tool to create dumps via configuration files\n" +
+"# -----------------------------------------------------------------------------------------\n"
+"# This is the configuration template file, it contains all possible attributes that btool\n" +
+"# can pull information from to properly process backup requests. For a detailed description\n" +
+"# of how to use each attribute, please see the spec file in the documentation at: \n" +
+"# https://github.com/pages/etc/etc\n" +
+"database:\n" +
+" engine:\n" +
+" user:\n" +
+" password:\n" + 
+" host:\n" + 
+"dump:\n" +
+" path:\n" +
+" type:\n" +
+" database_name:\n" + 
+" tables:\n"
+    
 
 		// Creating the configuration file
 		err := os.WriteFile(f, []byte(content), 0755)
@@ -114,10 +96,10 @@ func runInit(cmd *cobra.Command, args []string) {
 		}
 
 	} else {
-		slog.Info("Configuration file exists")
+		slog.Info("Configuration file created!")
 	}
 
-	slog.Info("Success - Init check completed. Run 'btool --help' for usage.")
+	slog.Info("Success - Init completed. Run 'btool --help' for usage.")
 	
 }
 
