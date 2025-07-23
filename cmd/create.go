@@ -28,7 +28,8 @@ var createCmd = &cobra.Command{
 	Short: "create a dump",
 	Long: `Creates a dump from a config file. 
 
-All values can be assigned directly into the config file. For templates and a more detailed reference, see the docs`,
+All values can be assigned directly into the config file. For templates and a more detailed reference spec sheet, see: 
+https://github.com/bazgab/btool/etc/etc`,
 	Run: runCreate,
 }
 
