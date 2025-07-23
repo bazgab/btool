@@ -21,6 +21,7 @@ import (
 	
 	"github.com/spf13/cobra"
 	"log/slog"
+	"gopkg.in/yaml.v3"
 )
 
 var createCmd = &cobra.Command{
@@ -39,12 +40,69 @@ func init() {
 }
 
 func runCreate(cmd *cobra.Command, _ []string) {
-	f, err := cmd.Flags().GetString("conf")
+	c, err := cmd.Flags().GetString("conf")
 	if err != nil {
 		slog.Error(err.Error())
 	}
 
-	slog.Info("The following file will be written: " + f)
+	slog.Info("The following file has been selected for config values: " + c)
 	
+	
+	// Default values in case the user does not provide these values
+	// Notice: attributes password and path do not have a default value, as it is critical to provide this information
+	const (
+	
+		defaultUser = "root"
+		defaultEngine = "mariadb"
+		defaultHost = "localhost"
+		defaultType = "all_databases"
+		defaultTables = "all_tables"
+	)	
+	
+	type TestYAML struct {
+		User     string `yaml:"user"`
+		Password []string `yaml:"password"`
+	}
+
+
+	var yamlValues TestYAML
+
+	yamlFile, err := os.ReadFile("test.yaml")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	
+	replaced := os.ExpandEnv(string(yamlFile))
+
+	err = yaml.Unmarshal([]byte(replaced), &yamlValues)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	fmt.Println("Reading from YAML FILE:")
+	
+	// Checking if we can parse multiple values 
+	fmt.Printf("Password field has %d values\n", len(yamlValues.Password))
+	
+	for i := 0; i < len(yamlValues.Password); i++ {
+		fmt.Printf("Value %d : %s\n", i, yamlValues.Password[i])
+		
+	}
+
+
+	// Now testing if we can parse an env variable
+	fmt.Println("User: ", yamlValues.User)
+	fmt.Println("Checking if user is the same as /home/bazgab...")
+	
+	//Check user
+	if yamlValues.User  == "" {
+		fmt.Println("User check - No selected user. Setting option to default value: ", defaultUser)
+	} else if yamlValues.User == "/home/gabbaz"{
+		fmt.Println("Warning - user is /home/gabbaz")
+	} else {
+		fmt.Println("Error - invalid value")
+	}
+
 	
 }
