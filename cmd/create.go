@@ -18,7 +18,8 @@ The full license can be seen in the file ./LICENSE.  If not see
 package cmd
 
 import (
-	
+	"fmt"
+	"os"
 	"github.com/spf13/cobra"
 	"log/slog"
 	"gopkg.in/yaml.v3"
@@ -94,19 +95,19 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	// Checking if we can parse multiple values 
 	fmt.Printf("Password field has %d values\n", len(confValues.Password))
 	
-	for i := 0; i < len(yamlValues.Password); i++ {
+	for i := 0; i < len(confValues.Password); i++ {
 		fmt.Printf("Value %d : %s\n", i, confValues.Password[i])
 		
 	}
 
 	// Now testing if we can parse an env variable
-	fmt.Println("User: ", yamlValues.User)
+	fmt.Println("User: ", confValues.User)
 	fmt.Println("Checking if user is the same as /home/bazgab...")
 	
 	//Check user
 	if confValues.User  == "" {
 		fmt.Println("User check - No selected user. Setting option to default value: ", defaultUser)
-	} else if yamlValues.User == "/home/sample"{
+	} else if confValues.User == "/home/sample"{
 		fmt.Println("Warning - user is /home/not_sample")
 	} else {
 		fmt.Println("Error - invalid value")
