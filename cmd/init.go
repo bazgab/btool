@@ -29,7 +29,7 @@ var initCmd = &cobra.Command{
 	Short: "Initializes a sample configuration YAML file in the current directory",
 	Long: `Initializes a sample configuration YAML file in the current directory, parsing the "name" flag as the file name (required). 
 	
-Exampĺe usage: btool init --file="btool_config"
+Exampĺe usage: btool init --file="btool_config.yaml"
 	
 This will create an empty config file btool_config.yaml in the current directory, which is used for later creating dumps/backups.
 	
@@ -49,12 +49,12 @@ func init() {
 
 func runInit(cmd *cobra.Command, args []string) {
 	
-	file, err := cmd.Flags().GetString("file")
+	f, err := cmd.Flags().GetString("file")
 	if err != nil {
 		slog.Error(err.Error())
 	}
 	
-	f := file + ".yaml"
+
 	slog.Info(fmt.Sprintf("File to be created: %s", f))
 	
 	if cFile(f) == false {

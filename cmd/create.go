@@ -25,7 +25,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-
+// The following values will be used in case the user does not provide a value for these parameters
+// Notice: the fields 'password' and 'path' do not have default values, making them required
 const (
 	
 		defaultUser = "root"
@@ -52,7 +53,7 @@ func init() {
 }
 
 func runCreate(cmd *cobra.Command, _ []string) {
-	c, err := cmd.Flags().GetString("conf")
+	c, err := cmd.Flags().GetString("config")
 	if err != nil {
 		slog.Error(err.Error())
 	}
@@ -60,17 +61,6 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	slog.Info("The following file has been selected for config values: " + c)
 	
 	
-	// Default values in case the user does not provide these values
-	// Notice: attributes password and path do not have a default value, as it is critical to provide this information
-	/*const (
-	
-		defaultUser = "root"
-		defaultEngine = "mariadb"
-		defaultHost = "localhost"
-		defaultType = "all_databases"
-		defaultTables = "all_tables"
-	)	
-	*/
 	type ConfigurationFile struct {
 		User     string `yaml:"database.user"`
 		Password []string `yaml:"database.password"`
