@@ -72,8 +72,8 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	)	
 	*/
 	type ConfigurationFile struct {
-		User     string `yaml:"user"`
-		Password []string `yaml:"password"`
+		User     string `yaml:"database.user"`
+		Password []string `yaml:"database.password"`
 	}
 
 
