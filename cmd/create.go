@@ -92,15 +92,12 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	// Now testing if we can parse an env variable
 	fmt.Println("User: ", confValues.User)
-	fmt.Println("Checking if user is the same as /home/bazgab...")
 	
 	//Check user
 	if confValues.User  == "" {
 		fmt.Println("User check - No selected user. Setting option to default value: ", defaultUser)
-	} else if confValues.User == "/home/sample"{
-		fmt.Println("Warning - user is /home/not_sample")
 	} else {
-		fmt.Println("Error - invalid value")
+		fmt.Printf("User value: %s", confValues.User)
 	}
 
 	
