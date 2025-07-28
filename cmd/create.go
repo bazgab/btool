@@ -87,24 +87,25 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		fmt.Println(err.Error())
 	}
 
-	// Testing for multiple values
-
+	/* Testing for multiple values
 	for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
 		fmt.Printf("Database name %d : %s\n", i, confValues.Dump.DatabaseName[i])
 
 	}
+	*/
 
-	//Check user
+	//Check values, if not > parse defaults
 	if confValues.Database.User == "" {
 		slog.Info("User check - No selected user. Setting option to default value: ", defaultUser)
 	} else {
-		slog.Info(fmt.Printf("User value: %s\n", confValues.Database.User))
+		slog.Info(fmt.Sprintf("User value: %s\n", confValues.Database.User))
 	}
+	
+	if confValues.Database.Password == "" {
+		slog.Info("Password check - No password entered. Password is a \033[1mrequired field\033[0m, for usage see the docs.")
+		// TODO > if no password selected, panic
+	} 
 
-	// Testing for host naming
-	fmt.Printf("Host: %s\n", confValues.Database.Host)
-
-	// Testing ok for all
 	
 	
 }
