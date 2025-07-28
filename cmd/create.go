@@ -74,12 +74,16 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	*/
 	type Config struct {
 		Database struct {
+			Engine   string `yaml:"engine"`
 			User     string `yaml:"user"`
 			Password string `yaml:"password"`
+			Host     string `yaml:"host"`
 		}`yaml:"database"`
 		Dump struct {
 			Path string `yaml:"path"`
 			Type string `yaml:"type"`
+			DatabaseName []string `yaml:"database_name"`
+			Tables []string `yaml:"tables"` 
 		}`yaml:"dump"`
 		
 	}
@@ -99,12 +103,13 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	}
 	
 	
-	/*
-	for i := 0; i < len(confValues.Password); i++ {
-		fmt.Printf("Value %d : %s\n", i, confValues.Password[i])
+	// Testing for multiple values
+
+	for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
+		fmt.Printf("Database name %d : %s\n", i, confValues.Dump.DatabaseName[i])
 		
 	}
-	*/
+	
 	
 	// Now testing if we can parse an env variable
 	//fmt.Println("User: ", confValues.User)
@@ -116,5 +121,8 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		fmt.Printf("User value: %s\n", confValues.Database.User)
 	}
 
-	
+	// Testing for host naming
+	fmt.Printf("Host: %s\n", confValues.Database.Host)
+		
+	// Testing ok for all
 }
