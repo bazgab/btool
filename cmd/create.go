@@ -19,24 +19,22 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"github.com/spf13/cobra"
-	"log/slog"
 	"gopkg.in/yaml.v3"
+	"log/slog"
+	"os"
 )
 
 // The following values will be used in case the user does not provide a value for these parameters
 // Notice: the fields 'password' and 'path' do not have default values, making them required
 const (
-	
-		defaultUser = "root"
-		defaultEngine = "mariadb"
-		defaultHost = "localhost"
-		defaultType = "all_databases"
-		defaultTables = "all_tables"
-	)
-	
-	
+	defaultUser   = "root"
+	defaultEngine = "mariadb"
+	defaultHost   = "localhost"
+	defaultType   = "all_databases"
+	defaultTables = "all_tables"
+)
+
 var createCmd = &cobra.Command{
 	Use:   "create",
 	Short: "create a dump",
@@ -59,18 +57,18 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	}
 
 	slog.Info("The following file has been selected for config values: " + c)
-	
+
 	// Testing declaring nested nodes
 	/*
-	type Database struct {
-		User     string `yaml:"user"`
-		Password []string `yaml:"password"`
-	}
+		type Database struct {
+			User     string `yaml:"user"`
+			Password []string `yaml:"password"`
+		}
 
-	type Dump struct {
-		Path string `yaml:"path"`
-		Type string `yaml:"type"`
-	}
+		type Dump struct {
+			Path string `yaml:"path"`
+			Type string `yaml:"type"`
+		}
 	*/
 	type Config struct {
 		Database struct {
@@ -78,44 +76,40 @@ func runCreate(cmd *cobra.Command, _ []string) {
 			User     string `yaml:"user"`
 			Password string `yaml:"password"`
 			Host     string `yaml:"host"`
-		}`yaml:"database"`
+		} `yaml:"database"`
 		Dump struct {
-			Path string `yaml:"path"`
-			Type string `yaml:"type"`
+			Path         string   `yaml:"path"`
+			Type         string   `yaml:"type"`
 			DatabaseName []string `yaml:"database_name"`
-			Tables []string `yaml:"tables"` 
-		}`yaml:"dump"`
-		
+			Tables       []string `yaml:"tables"`
+		} `yaml:"dump"`
 	}
-	
+
 	confFile, err := os.ReadFile(c)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
-	
 	replaced := os.ExpandEnv(string(confFile))
-	
+
 	var confValues Config
 	err = yaml.Unmarshal([]byte(replaced), &confValues)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	
-	
+
 	// Testing for multiple values
 
 	for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
 		fmt.Printf("Database name %d : %s\n", i, confValues.Dump.DatabaseName[i])
-		
+
 	}
-	
-	
+
 	// Now testing if we can parse an env variable
 	//fmt.Println("User: ", confValues.User)
-	
+
 	//Check user
-	if confValues.Database.User  == "" {
+	if confValues.Database.User == "" {
 		fmt.Println("User check - No selected user. Setting option to default value: ", defaultUser)
 	} else {
 		fmt.Printf("User value: %s\n", confValues.Database.User)
@@ -123,6 +117,8 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	// Testing for host naming
 	fmt.Printf("Host: %s\n", confValues.Database.Host)
-		
+
 	// Testing ok for all
+	
+	
 }
