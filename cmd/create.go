@@ -60,15 +60,30 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	slog.Info("The following file has been selected for config values: " + c)
 	
-	
-	type ConfigurationFile struct {
-		User     string `yaml:"database.user"`
-		Password []string `yaml:"database.password"`
+	// Testing declaring nested nodes
+	/*
+	type Database struct {
+		User     string `yaml:"user"`
+		Password []string `yaml:"password"`
 	}
 
-
-	var confValues ConfigurationFile
-
+	type Dump struct {
+		Path string `yaml:"path"`
+		Type string `yaml:"type"`
+	}
+	*/
+	type Config struct {
+		Database struct {
+			User     string `yaml:"user"`
+			Password string `yaml:"password"`
+		}`yaml:"database"`
+		Dump struct {
+			Path string `yaml:"path"`
+			Type string `yaml:"type"`
+		}`yaml:"dump"`
+		
+	}
+	
 	confFile, err := os.ReadFile(c)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -76,28 +91,29 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	
 	replaced := os.ExpandEnv(string(confFile))
-
+	
+	var confValues Config
 	err = yaml.Unmarshal([]byte(replaced), &confValues)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	
-	// Checking if we can parse multiple values 
-	fmt.Printf("Password field has %d values\n", len(confValues.Password))
 	
+	/*
 	for i := 0; i < len(confValues.Password); i++ {
 		fmt.Printf("Value %d : %s\n", i, confValues.Password[i])
 		
 	}
-
+	*/
+	
 	// Now testing if we can parse an env variable
-	fmt.Println("User: ", confValues.User)
+	//fmt.Println("User: ", confValues.User)
 	
 	//Check user
-	if confValues.User  == "" {
+	if confValues.Database.User  == "" {
 		fmt.Println("User check - No selected user. Setting option to default value: ", defaultUser)
 	} else {
-		fmt.Printf("User value: %s", confValues.User)
+		fmt.Printf("User value: %s\n", confValues.Database.User)
 	}
 
 	
