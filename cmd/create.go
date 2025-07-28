@@ -58,18 +58,7 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	slog.Info("The following file has been selected for config values: " + c)
 
-	// Testing declaring nested nodes
-	/*
-		type Database struct {
-			User     string `yaml:"user"`
-			Password []string `yaml:"password"`
-		}
-
-		type Dump struct {
-			Path string `yaml:"path"`
-			Type string `yaml:"type"`
-		}
-	*/
+	
 	type Config struct {
 		Database struct {
 			Engine   string `yaml:"engine"`
@@ -105,14 +94,11 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	}
 
-	// Now testing if we can parse an env variable
-	//fmt.Println("User: ", confValues.User)
-
 	//Check user
 	if confValues.Database.User == "" {
-		fmt.Println("User check - No selected user. Setting option to default value: ", defaultUser)
+		slog.Info("User check - No selected user. Setting option to default value: ", defaultUser)
 	} else {
-		fmt.Printf("User value: %s\n", confValues.Database.User)
+		slog.Info(fmt.Printf("User value: %s\n", confValues.Database.User))
 	}
 
 	// Testing for host naming
