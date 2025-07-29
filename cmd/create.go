@@ -93,6 +93,13 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	}
 	*/
+	// Firstly check the correct usage of db engine
+	if confValues.Database.Engine == "mariadb" {
+		slog.Info("MariaDB selected - proceeding setup")
+	} else {
+		slog.Error("Unsupported Database Engine")
+		os.Exit(1)
+	}
 
 	//Check values, if not > parse defaults
 	if confValues.Database.User == "" {
