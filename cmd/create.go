@@ -104,9 +104,8 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	//Check values, if not > parse defaults
 	if confValues.Database.User == "" {
 		slog.Info("User check - No selected user. Setting option to default value: ", defaultUser)
-	} else {
-		slog.Info(fmt.Sprintf("User: %s\n", confValues.Database.User))
-	}
+	}	
+	slog.Info(fmt.Sprintf("User: %s\n", confValues.Database.User))
 	
 	if confValues.Database.Password == "" {
 		slog.Info("Password check - No password entered. Password is a \033[1mrequired field\033[0m, for usage see the docs.")
