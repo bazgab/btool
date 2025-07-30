@@ -113,6 +113,18 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		// TODO > if no password selected, panic
 	} 
 	
+	slog.Info("Type check: ")
+	switch confValues.Dump.Type {
+		case "all_databases":
+			slog.Info("all databases")
+		case "select_databases":
+			slog.Info("select databases")
+		default:
+			slog.Info("Invalid/No option selected - using default option: all_databases")
+	}
+	
+
+	// Perform dump
 	
 	
 
