@@ -120,6 +120,7 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		slog.Info("Path check - No path entered. Path is a \033[1mrequired field\033[0m, for usage see the docs.")
 		// TODO > if no path selected, panic
 	} 
+	slog.Info(fmt.Sprintf("Creating dump on path: %s", confValues.Dump.Path))
 	
 	slog.Info("Type check: ")
 	switch confValues.Dump.Type {
