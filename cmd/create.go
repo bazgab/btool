@@ -112,6 +112,15 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		// TODO > if no password selected, panic
 	} 
 	
+	if confValues.Database.Host == "" {
+		slog.Info(fmt.Sprintf("Host check - No selected host. Setting option to default value: %s", defaultHost))
+	}	
+	
+	if confValues.Dump.Path == "" {
+		slog.Info("Path check - No path entered. Path is a \033[1mrequired field\033[0m, for usage see the docs.")
+		// TODO > if no path selected, panic
+	} 
+	
 	slog.Info("Type check: ")
 	switch confValues.Dump.Type {
 		case "all_databases":
@@ -122,6 +131,10 @@ func runCreate(cmd *cobra.Command, _ []string) {
 			slog.Info("Invalid/No option selected - using default option: all_databases")
 	}
 	
+	if confValues.Dump.Path == "" {
+		slog.Info(fmt.Sprintf("Tables check - No tables entered. Setting option to default value: %s", defaultTables))
+		// TODO > if no path selected, panic
+	} 
 
 	// Perform dump
 	
