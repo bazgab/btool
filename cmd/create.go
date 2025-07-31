@@ -93,6 +93,33 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	}
 	*/
+	
+	// Design Issue:
+	// overcomplicating by having default values. 
+	
+	// An approach to not have multiple values laying around:
+	
+	// Perform a basic dump
+	
+	for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
+		fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
+		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
+		arg := []string{"--databases", confValues.Dump.DatabaseName[i], ">", dumpName }
+		fmt.Println(arg)
+	}
+
+	
+		/*
+	err := exec.Command("usr/bin/mariadb-dump", arg1).Run()
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Println("Command successfully executed")
+	}
+
+	*/
+	
+	/*
 	// Firstly check the correct usage of db engine
 	if confValues.Database.Engine == "mariadb" {
 		slog.Info("MariaDB selected - proceeding setup")
@@ -139,7 +166,7 @@ func runCreate(cmd *cobra.Command, _ []string) {
 
 	// Perform dump
 	
-	
+	*/
 
 	
 	
