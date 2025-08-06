@@ -105,7 +105,13 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
 		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
 		arg := []string{"--databases", confValues.Dump.DatabaseName[i], ">", dumpName }
-		fmt.Println(arg)
+		fmt.Println("Running command with following argument: " + arg)
+		out, err := exec.Command("usr/bin/mariadb-dump", arg).Output()
+		if err != nil {
+			slog.Info("Error when executing dump command")
+			os.Exit(1)
+		} 
+		fmt.Printf("Output: %s", out)
 	}
 
 	
