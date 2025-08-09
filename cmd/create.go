@@ -113,9 +113,9 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		} 
 		fmt.Printf("Output: %s", out)
 	}
-
 	
-		/*
+	
+	/*
 	err := exec.Command("usr/bin/mariadb-dump", arg1).Run()
 	if err != nil {
 		panic(err)
