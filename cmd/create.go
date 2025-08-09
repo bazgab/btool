@@ -22,7 +22,9 @@ import (
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 	"log/slog"
+	"os/exec"
 	"os"
+	"strings"
 )
 
 // The following values will be used in case the user does not provide a value for these parameters
@@ -105,8 +107,8 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
 		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
 		arg := []string{"--databases", confValues.Dump.DatabaseName[i], ">", dumpName }
-		fmt.Println("Running command with following argument: " + arg)
-		out, err := exec.Command("usr/bin/mariadb-dump", arg).Output()
+		fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
+		out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
 		if err != nil {
 			slog.Info("Error when executing dump command")
 			os.Exit(1)
