@@ -60,6 +60,7 @@ func runInit(cmd *cobra.Command, args []string) {
 	if cFile(f) == false {
 		slog.Info("File does not exist, creating...")
 
+		// TODO: Better way to provide a template file 
 		var content =
 		// Template file
 		"# BTOOL - A general-purpose backup tool to create dumps via configuration files\n" +
