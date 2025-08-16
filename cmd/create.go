@@ -109,16 +109,6 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	
 	
 	/*
-	err := exec.Command("usr/bin/mariadb-dump", arg1).Run()
-	if err != nil {
-		panic(err)
-	} else {
-		fmt.Println("Command successfully executed")
-	}
-
-	*/
-	
-	/*
 	// Firstly check the correct usage of db engine
 	if confValues.Database.Engine == "mariadb" {
 		slog.Info("MariaDB selected - proceeding setup")
@@ -150,22 +140,19 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	
 	slog.Info("Type check: ")
 	
-	// A better aproach
-	* 
+	/* A better aproach
 	
 	if confValues.Dump.Type != all_databases {
-		Enter condition
+		if confValues.Dump.Tables != all_tables {
+		Config for running database_name in command with specific table name
+		} else {
+			Config for running database_name in command
+		}
 		
+	} else {
+		Config for running command with "--all-databases" hardcoded
 	}
 	
-	switch confValues.Dump.Type {
-		case "all_databases":
-			slog.Info("all databases")
-		case "select_databases":
-			slog.Info("select databases")
-		default:
-			slog.Info("Invalid/No option selected - using default option: all_databases")
-	}
 	
 	if confValues.Dump.Path == "" {
 		slog.Info(fmt.Sprintf("Tables check - No tables entered. Setting option to default value: %s", defaultTables))
