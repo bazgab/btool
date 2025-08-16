@@ -149,6 +149,15 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	slog.Info(fmt.Sprintf("Creating dump on path: %s", confValues.Dump.Path))
 	
 	slog.Info("Type check: ")
+	
+	// A better aproach
+	* 
+	
+	if confValues.Dump.Type != all_databases {
+		Enter condition
+		
+	}
+	
 	switch confValues.Dump.Type {
 		case "all_databases":
 			slog.Info("all databases")
