@@ -27,15 +27,6 @@ import (
 	"strings"
 )
 
-// The following values will be used in case the user does not provide a value for these parameters
-// Notice: the fields 'password' and 'path' do not have default values, making them required
-const (
-	defaultUser   = "root"
-	defaultEngine = "mariadb"
-	defaultHost   = "localhost"
-	defaultType   = "all_databases"
-	defaultTables = "all_tables"
-)
 
 var createCmd = &cobra.Command{
 	Use:   "create",
