@@ -94,10 +94,15 @@ func runCreate(cmd *cobra.Command, _ []string) {
 	
 	// Perform a basic dump
 	
-	for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
+	if confValues.Dump.Type != all_databases {
+		if confValues.Dump.Tables != all_tables {
+			
+		// Runs the command with database_name and specific table name
+		
+		for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
 		fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
 		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
-		arg := []string{"--databases", confValues.Dump.DatabaseName[i], ">", dumpName }
+		arg := []string{"--databases", confValues.Dump.DatabaseName[i], confValues.Dump.Tables[i], ">", dumpName }
 		fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
 		out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
 		if err != nil {
@@ -105,7 +110,27 @@ func runCreate(cmd *cobra.Command, _ []string) {
 			os.Exit(1)
 		} 
 		fmt.Printf("Output: %s", out)
+		}
+		
+		} else {
+			
+			// Config for running database_name in command
+			for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
+			fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
+			dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
+			arg := []string{"--databases", confValues.Dump.DatabaseName[i], ">", dumpName }
+			fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
+			out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
+			if err != nil {
+			slog.Info("Error when executing dump command")
+			os.Exit(1)
+			} 
+		}
+		
+	} else {
+		// Config for running command with "--all-databases" hardcoded
 	}
+	
 	
 	
 	/*
