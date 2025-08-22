@@ -114,7 +114,7 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		
 		} else {
 			
-			// Config for running database_name in command
+			// Config for running just database_name in command
 			for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
 			fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
 			dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
@@ -129,6 +129,18 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		
 	} else {
 		// Config for running command with "--all-databases" hardcoded
+		for i := 0; i < len(confValues.Dump.DatabaseName); i++ {
+		fmt.Printf("Creating dump for : %s\n", confValues.Dump.DatabaseName[i])
+		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
+		arg := []string{"--all-databases", ">", dumpName }
+		fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
+		out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
+		if err != nil {
+			slog.Info("Error when executing dump command")
+			os.Exit(1)
+		} 
+		fmt.Printf("Output: %s", out)
+		}
 	}
 	
 	
