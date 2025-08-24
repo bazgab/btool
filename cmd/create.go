@@ -80,7 +80,11 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		fmt.Println(err.Error())
 	}
 	
-	// Perform a basic dump
+	// Check for mariadb engine usage
+	if confValues.Database.Engine != "mariadb" {
+		slog.Info("Database engine not compatible with this version of btool");
+		os.Exit(1);
+	}
 	
 	uL := confValues.Database.User
 	uP := confValues.Database.Password 
