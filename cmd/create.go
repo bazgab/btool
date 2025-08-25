@@ -22,7 +22,7 @@ import (
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 	"log/slog"
-	//"os/exec"
+	"os/exec"
 	"os"
 	"strings"
 )
@@ -100,13 +100,12 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
 		arg := []string{loginDetails, "--databases", confValues.Dump.DatabaseName[i], confValues.Dump.Tables[i], ">", dumpName }
 		fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
-		fmt.Println("usr/bin/mariadb-dump", strings.Join(arg, " "));
-		// out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
+		out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
 		if err != nil {
 			slog.Info("Error when executing dump command")
 			os.Exit(1)
 		} 
-		// fmt.Printf("Output: %s", out)
+		fmt.Printf("Output: %s", out)
 		}
 		
 		} else {
@@ -117,13 +116,12 @@ func runCreate(cmd *cobra.Command, _ []string) {
 			dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
 			arg := []string{loginDetails, "--databases", confValues.Dump.DatabaseName[i], ">", dumpName }
 			fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
-			fmt.Println("usr/bin/mariadb-dump", strings.Join(arg, " "));
-			// out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
+			out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
 			if err != nil {
 			slog.Info("Error when executing dump command")
 			os.Exit(1)
 			}
-			// fmt.Printf("Output: %s", out); 
+			fmt.Printf("Output: %s", out); 
 		}
 		
 		} 
@@ -135,13 +133,12 @@ func runCreate(cmd *cobra.Command, _ []string) {
 		dumpName := confValues.Dump.DatabaseName[i] + "-dump.sql"
 		arg := []string{loginDetails ,"--all-databases", ">", dumpName }
 		fmt.Sprintf("Running command with following argument: %s", strings.Join(arg, " "))
-		fmt.Println("usr/bin/mariadb-dump", strings.Join(arg, " "));
-		// out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
+		out, err := exec.Command("usr/bin/mariadb-dump", strings.Join(arg, " ")).Output()
 		if err != nil {
 			slog.Info("Error when executing dump command")
 			os.Exit(1)
 		} 
-		// fmt.Printf("Output: %s", out)
+		fmt.Printf("Output: %s", out)
 		}
 	}
 	
